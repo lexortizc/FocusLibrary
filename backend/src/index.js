@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const userRoutes = require('./routes/users');
 const bookRoutes = require('./routes/books');
+const requestRoutes = require('./routes/requests');
 
 const app = express();
 app.use(cors());
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use(userRoutes);
 app.use(bookRoutes);
+app.use(requestRoutes);
 app.use((err, req, res, next) => {
     return res.json({
         message: err.message
