@@ -24,11 +24,21 @@ const login = async (req, res, next) => {
     }
 }
 
-const home = async (req, res) => {
-    res.json('Hello World!');
+const signup = async (req, res) => {
+    const { first_name, last_name, email, password, role_id } = req.body;
+    try {
+        const result = await pool.query(
+            'INSERT INTO users(first_name, last_name, email, password, role_id) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            [first_name, last_name, email, password, role_id]
+        );
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.log(error.message);
+        next(error);
+    }
 }
 
 module.exports = {
     login,
-    home
+    signup
 }

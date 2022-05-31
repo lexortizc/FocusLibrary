@@ -1,10 +1,10 @@
 const { Router } = require('express');
-const { login, home } = require('../controllers/users');
+const { login, signup } = require('../controllers/users');
 const { validateToken } = require('../helpers/jwt');
 
 const router = Router();
 
-router.get('/login', login);
-router.get('/', validateToken, home);
+router.get('/users/login', login);
+router.get('/users/signup', validateToken, signup);
 
 module.exports = router;
