@@ -5,11 +5,12 @@ import toast from 'react-hot-toast'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import AppContext from '../helpers/context';
-import api from '../helpers/api'
+import useApi from '../hooks/useApi'
 import { Container } from 'react-bootstrap'
 import decodeToken from '../helpers/auth'
 
 const LoginForm = () => {
+  const api = useApi();
   const navigate = useNavigate();
   const { setSession } = useContext(AppContext);
   const formik = useFormik({
