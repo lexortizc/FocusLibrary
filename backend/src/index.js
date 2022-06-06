@@ -15,10 +15,11 @@ app.use(userRoutes);
 app.use(bookRoutes);
 app.use(requestRoutes);
 app.use((err, req, res, next) => {
-    return res.json({
+    console.error(err);
+    return res.status(400).json({
         message: err.message
     })
 });
 
-app.listen(3000);
-console.log('Server on http://localhost:3000')
+app.listen(4000);
+console.log('Server on http://localhost:4000')

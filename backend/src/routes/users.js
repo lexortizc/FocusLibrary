@@ -4,7 +4,7 @@ const { validateToken } = require('../helpers/jwt');
 
 const router = Router();
 
-router.get('/users/login', login);
-router.get('/users/signup', validateToken, signup);
+router.post('/users/login', login);
+router.post('/users/signup', validateToken, signup);
 
 module.exports = router;

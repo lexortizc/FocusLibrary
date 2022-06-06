@@ -1,11 +1,16 @@
 const pool = require('../database');
 
 const getAllBooks = async (req, res, next) => {
-    const { filter, word } = req.body;
+    const { filter, word } = req.query;
     try {
-        const result = await pool.query(`SELECT * FROM books WHERE ${filter} LIKE '%${word}%'`);
+        let query = `SELECT * FROM books WHERE ${filter} LIKE '%${word}%'`
+        if(filter === 'published_year') {
+            query = `SELECT * FROM books WHERE ${filter} = ${(word === "") ? 0 : word}`
+        }
+
+        const result = await pool.query(query);
         const allBooks = result.rows;
-        res.json(allBooks);
+        res.status(200).json(allBooks);
     } catch (error) {
         next(error);
     }
@@ -22,7 +27,7 @@ const getBook = async (req, res, next) => {
         }
 
         const book = result.rows[0];
-        res.json(book);
+        res.status(200).json(book);
     } catch (error) {
         next(error);
     }
@@ -35,9 +40,8 @@ const createBook = async (req, res, next) => {
             'INSERT INTO books(title, author, published_year, genre, copies, stock) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
             [title, author, published_year, genre, copies, stock]
         );
-        res.json(result.rows[0]);
+        res.status(201).json(result.rows[0]);
     } catch (error) {
-        console.log(error.message);
         next(error);
     }
 }

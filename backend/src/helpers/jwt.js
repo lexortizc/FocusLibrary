@@ -7,11 +7,17 @@ const generateAccessToken = (user) => {
 
 const validateToken = (req, res, next) => {
     const accessToken = req.headers['authorization'];
-    if(!accessToken) return res.send("Access denied!");
+    if(!accessToken) {
+        return res.status(401).json({
+            message: "Access denied",
+        });
+    }
 
     jwt.verify(accessToken, process.env.JWT_SECRET, (err, user) => {
         if(err) {
-            res.send('Access denied, token expired or incorrect')
+            res.status(401).json({
+                message: "Access denied",
+            });
         } else {
             req.user = user;
             next();
