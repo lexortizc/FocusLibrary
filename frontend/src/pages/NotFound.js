@@ -1,11 +1,12 @@
 import React from 'react';
+import { Container } from 'react-bootstrap';
 
 const NotFound = () => {
   return(
-    <>
-        <h1> Página no encontrada</h1>
-        <h2>Utilice la barra de navegación para ir a una sección diferente</h2>
-    </>
+    <Container className="text-center">
+      <h1>We're sorry!</h1>
+      <h2>Page not found</h2>
+    </Container>
   )
 }
 
